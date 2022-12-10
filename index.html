@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" icon="">
+</head>
+<body>
+<div id="root">
+    <div>{{name}}</div>
+</div>
+<script src="./dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        name: 'conderpath',
+        info: {
+          sex: 1,
+          address: '北京市啊啊啊'
+        },
+        roles: ['admin','user'],
+        arrs: [ { age: 1 }, { age: 3} ]
+      }
+    })
+    vm.arrs[0].age
+</script>
+</body>
+</html>
