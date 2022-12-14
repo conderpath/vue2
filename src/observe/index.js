@@ -1,4 +1,4 @@
-import {isObject} from "../utils";
+import {def, isObject} from "../utils";
 import {arrayMethods} from "../array";
 /**
  * 1. 如果数据是对象，会将对象不停的递归进行劫持
@@ -39,7 +39,6 @@ function defineReactive(data, key,val) {
   observe(val)
   Object.defineProperty(data,key,{
     get() {
-      console.log('观测到取值了')
       return val
     },
     set(newVal) {

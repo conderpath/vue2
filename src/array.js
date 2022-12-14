@@ -15,7 +15,6 @@ const methods = [
 methods.forEach(method=>{
   // 用户调用这些方法时，调用这里重写的，否则调用原来原型链上的方法
   arrayMethods[method] = function(...args) {
-    console.log('数组发生变化了', method)
     oldArrayPrototype[method].apply(this,args)
     let inserted;
     switch (method) {
