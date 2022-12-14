@@ -18,7 +18,10 @@ const doctype = /^<!DOCTYPE [^>]+>/i
 // 匹配注释<!--
 const comment = /^<!\--/
 const conditionalComment = /^<!\[/
-
+// 组装树结构时判断是否是树根
+let root = null
+// 节点栈
+let stack = []
 // 将解析后的结果组装成一个树结构
 function createAstElement(tagName,attrs) {
   return {
@@ -33,6 +36,7 @@ function createAstElement(tagName,attrs) {
 // 解析html字符串 <div id="app"> {{name}}  </div>
 export function compileToFunction(template) {
   parserHTML(template)
+  console.log(root)
 }
 // html: <div id="app"> {{name}}  </div>
 function parserHTML(html) {
@@ -101,13 +105,36 @@ function parserHTML(html) {
 
 // 解析开始标签
 function start(tagName, attributes) {
-  console.log('start', tagName, attributes)
+  let parent = stack[stack.length - 1]
+  let element = createAstElement(tagName, attributes)
+  if(!root) {
+    root = element
+  }
+  // 记录新增元素的父节点,并将节点push到父节点的children中
+  element.parent = parent
+  if(parent) {
+    parent.children.push(element)
+  }
+  stack.push(element)
 }
 // 解析结束标签
 function end(tagName) {
-  console.log('end', tagName)
+  // 标签结束后 弹出栈
+  let last = stack.pop()
+  if(last.tag !== tagName) {
+    throw new Error('标签不匹配')
+  }
+
 }
 // 解析标签内容
 function chars(text) {
-  console.log('text', text)
+  text = text.replace(/\s*/,"")
+  // 栈中的最后一个是文本的父节点
+  let parent = stack[stack.length - 1]
+  if(text) {
+    parent.children.push({
+      type: 3,
+      text
+    })
+  }
 }
