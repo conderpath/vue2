@@ -20,6 +20,7 @@ export function initMixin(Vue) {
     const vm = this
     const options = vm.$options
     el = document.querySelector(el)
+    vm.$el = el
     // 模板转化成对应的渲染函数  => 虚拟dom的概念vnode => diff算法更新虚拟dom => 产生真实节点后更新
     if(!options.render) {
       let template = options.template
