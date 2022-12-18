@@ -50,9 +50,13 @@ function defineReactive(data, key,val) {
       return val
     },
     set(newVal) {
-      // 用户赋的新值可能是对象也需要进行劫持
-      observe(newVal)
-      val = newVal
+      if(newVal !== val) {
+        // 用户赋的新值可能是对象也需要进行劫持
+        observe(newVal)
+        val = newVal
+        //修改之后 当前属性存放的watcher执行进行视图更新
+        dep.notify()
+      }
     }
   })
 }

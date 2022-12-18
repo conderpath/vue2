@@ -24,6 +24,10 @@ class Watcher{
     // 页面取值之后需要进行释放，防止在模板外取值时进行了依赖收集
     popTarget(this) // Dep.target = null
   }
+  // 视图更新
+  update() {
+    this.get()
+  }
   // 建立dep和watcher之间的映射关系
   addDep(dep) {
     let id = dep.id

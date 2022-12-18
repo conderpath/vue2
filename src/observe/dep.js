@@ -14,6 +14,10 @@ class Dep{
       Dep.target.addDep(this)
     }
   }
+
+  notify() {
+    this.subs.forEach(watcher=> watcher.update())
+  }
   // dep中存放watcher
   addSub(watcher) {
     this.subs.push(watcher)
