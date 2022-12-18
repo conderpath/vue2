@@ -10,6 +10,8 @@ export function patch(oldVnode, vnode) {
     parent.insertBefore(ele, oldVnode.nextSibling)
     // 删除原来的旧节点
     parent.removeChild(oldVnode)
+    // 由于在第一次已经删除了旧节点，所以应该将更新后的节点进行返回
+    return ele
   }
 }
 

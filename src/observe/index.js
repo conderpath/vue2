@@ -1,5 +1,6 @@
 import {def, isObject} from "../utils";
-import {arrayMethods} from "../array";
+import {arrayMethods} from "./array";
+import Dep from './dep'
 /**
  * 1. 如果数据是对象，会将对象不停的递归进行劫持
  * 2. 如果数据是数组，会劫持数组的方法，并对数组中不是基本数据类型的进行劫持
@@ -37,8 +38,15 @@ class Observer{
 function defineReactive(data, key,val) {
   // value可能是对象嵌套对象，也需要进行劫持
   observe(val)
+  // 每个属性都有一个dep属性
+  let dep = new Dep()
   Object.defineProperty(data,key,{
     get() {
+      // 取值时需要将dep和watcher关联
+      if(Dep.target) { // 说明取值是在模板中获取的，而非js中
+        // 建立dep和watcher之间的依赖映射关系
+        dep.depand()
+      }
       return val
     },
     set(newVal) {
