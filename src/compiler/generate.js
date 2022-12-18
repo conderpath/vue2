@@ -3,7 +3,6 @@ const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g
 // [{name: 'id', value:'app'}, { name: 'name', value: '1'}, {name: 'style', value: 'background: red; font-size: 30px;'}]
 function genProps(attrs) {
   let str = ''
-  console.log('attrs:', attrs)
   attrs.forEach(item=>{
     // 针对style属性特殊处理
     if(item.name === 'style') {

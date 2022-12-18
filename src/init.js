@@ -1,5 +1,6 @@
 import {initState} from "./state";
 import {compileToFunction} from "./compiler/index";
+import {mountComponent} from "./liftcycle";
 
 export function initMixin(Vue) {
   Vue.prototype._init = function (options) {
@@ -26,10 +27,14 @@ export function initMixin(Vue) {
       if(!template && el) {
         template = el.outerHTML
       }
-      // 将模板变成render渲染函数
+      // 将模板变成render渲染函数( with + new Function语法)
       let render = compileToFunction(template)
+      // options.render就是渲染函数
       options.render = render
     }
-    // options.render就是渲染函数
+
+    // 调用render方法，渲染成真实dom，替换掉页面的内容
+    // 组件的挂载
+    mountComponent(vm, el)
   }
 }
