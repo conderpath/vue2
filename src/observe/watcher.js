@@ -1,4 +1,5 @@
 import {popTarget, pushTarget} from "./dep";
+import {queueWatcher} from "./shceduler";
 
 let id = 0
 class Watcher{
@@ -24,8 +25,15 @@ class Watcher{
     // 页面取值之后需要进行释放，防止在模板外取值时进行了依赖收集
     popTarget(this) // Dep.target = null
   }
-  // 视图更新
+  // 视图更新，vue中的更新操作是异步的
   update() {
+    // 初版，每次更新属性都直接更新视图，影响性能
+    // this.get()
+    // 多次调用update时，我们可以将watcher缓存起来，等一会儿一起更新
+    queueWatcher(this)
+    console.log('重新渲染了')
+  }
+  run() {
     this.get()
   }
   // 建立dep和watcher之间的映射关系

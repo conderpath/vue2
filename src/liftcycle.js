@@ -1,5 +1,6 @@
 import {patch} from "./vdom/patch";
 import Watcher from "./observe/watcher";
+import {nextTick} from "./utils/next-tick";
 
 export function lifecycleMixin(Vue) {
   Vue.prototype._update = function(vnode) {
@@ -7,6 +8,7 @@ export function lifecycleMixin(Vue) {
     // 既有初始化 又有更新，通过vnode生成新节点，更新或者替换旧的节点
     vm.$el =  patch(vm.$el, vnode)
   }
+  Vue.prototype.$nextTick = nextTick
 }
 
 

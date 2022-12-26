@@ -1,7 +1,6 @@
 // 这里oldVnode可能是dom节点，也有可能是虚拟节点
 export function patch(oldVnode, vnode) {
   if(oldVnode.nodeType == 1) { // dom节点
-    console.log('真实元素')
     // 真实元素父节点
     let parent = oldVnode.parentNode
     // let ele = createElement(vnode)

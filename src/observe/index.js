@@ -73,3 +73,9 @@ export function observe(data) {
   }
   return new Observer(data)
 }
+/*
+watch和dep
+我们将更新的操作封装到了一个watcher中，
+在页面渲染之前，会将watcher放到Dep类上
+在vue页面渲染使用属性的时候，需要进行依赖收集，收集对象的渲染watcher
+ */
